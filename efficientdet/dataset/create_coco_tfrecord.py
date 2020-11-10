@@ -45,7 +45,9 @@ from dataset import tfrecord_util
 flags.DEFINE_boolean(
     'include_masks', False, 'Whether to include instance segmentations masks '
     '(PNG encoded) in the result. default: False.')
-flags.DEFINE_string('image_dir', '', 'Directory containing images.')
+flags.DEFINE_string('image_dir',
+                    '/media/sever/data1/xzr/efficientdet/data/coco/val2017',
+                    'Directory containing images.')
 flags.DEFINE_string(
     'image_info_file', '', 'File containing image information. '
     'Tf Examples in the output files correspond to the image '
@@ -55,9 +57,13 @@ flags.DEFINE_string(
 flags.DEFINE_string(
     'object_annotations_file', '', 'File containing object '
     'annotations - boxes and instance masks.')
-flags.DEFINE_string('caption_annotations_file', '', 'File containing image '
+flags.DEFINE_string('caption_annotations_file',
+                    '/media/sever/data1/xzr/efficientdet/data/coco/captions_val2017.json',
+                    'File containing image '
                     'captions.')
-flags.DEFINE_string('output_file_prefix', '/tmp/train', 'Path to output file')
+flags.DEFINE_string('output_file_prefix',
+                    '/media/sever/data1/xzr/efficientdet/data/coco/tfrecord/val',
+                    'Path to output file')
 flags.DEFINE_integer('num_shards', 32, 'Number of shards for output file.')
 flags.DEFINE_integer('num_threads', None, 'Number of threads to run.')
 FLAGS = flags.FLAGS

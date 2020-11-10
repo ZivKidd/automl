@@ -15,7 +15,7 @@
 """The main training script."""
 import multiprocessing
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 from absl import app
 from absl import flags
 from absl import logging
@@ -52,7 +52,9 @@ flags.DEFINE_bool(
     'use_xla', False,
     'Use XLA even if strategy is not tpu. If strategy is tpu, always use XLA, '
     'and this flag has no effect.')
-flags.DEFINE_string('model_dir', None, 'Location of model_dir')
+flags.DEFINE_string('model_dir',
+                    '/media/sever/data1/xzr/efficientdet/data/efficientdet-d7x',
+                    'Location of model_dir')
 flags.DEFINE_string(
     'backbone_ckpt', '', 'Location of the ResNet50 checkpoint to use for model '
     'initialization.')
@@ -82,10 +84,11 @@ flags.DEFINE_integer('save_checkpoints_steps', 100,
 flags.DEFINE_string(
     'training_file_pattern', None,
     'Glob for training data files (e.g., COCO train - minival set)')
-flags.DEFINE_string('validation_file_pattern', None,
+flags.DEFINE_string('validation_file_pattern',
+                    '/media/sever/data1/xzr/efficientdet/data/coco/tfrecord/val*',
                     'Glob for evaluation tfrecords (e.g., COCO val2017 set)')
 flags.DEFINE_string(
-    'val_json_file', None,
+    'val_json_file', '/media/sever/data1/xzr/efficientdet/data/coco/instances_val2017.json',
     'COCO validation JSON containing golden bounding boxes. If None, use the '
     'ground truth from the dataloader. Ignored if testdev_dir is not None.')
 flags.DEFINE_string('testdev_dir', None,
@@ -93,9 +96,9 @@ flags.DEFINE_string('testdev_dir', None,
 flags.DEFINE_integer('num_examples_per_epoch', 120000,
                      'Number of examples in one epoch')
 flags.DEFINE_integer('num_epochs', None, 'Number of epochs for training')
-flags.DEFINE_string('mode', 'train',
+flags.DEFINE_string('mode', 'eval',
                     'Mode to run: train or eval (default: train)')
-flags.DEFINE_string('model_name', 'efficientdet-d1', 'Model name.')
+flags.DEFINE_string('model_name', 'efficientdet-d7x', 'Model name.')
 flags.DEFINE_bool('eval_after_training', False, 'Run one eval after the '
                   'training finishes.')
 flags.DEFINE_bool('profile', False, 'Profile training performance.')

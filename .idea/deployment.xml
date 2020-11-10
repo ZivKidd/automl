@@ -7,6 +7,9 @@
           <mappings>
             <mapping deploy="/media/sever/data1/xzr/efficientdet" local="$PROJECT_DIR$" />
           </mappings>
+          <excludedPaths>
+            <excludedPath path="/media/sever/data1/xzr/efficientdet/data" />
+          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>
