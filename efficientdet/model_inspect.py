@@ -30,9 +30,9 @@ import inference
 import utils
 from tensorflow.python.client import timeline  # pylint: disable=g-direct-tensorflow-import
 
-flags.DEFINE_string('model_name', 'efficientdet-d0', 'Model.')
+flags.DEFINE_string('model_name', 'efficientdet-d7x', 'Model.')
 flags.DEFINE_string('logdir', '/tmp/deff/', 'log directory.')
-flags.DEFINE_string('runmode', 'dry', 'Run mode: {freeze, bm, dry}')
+flags.DEFINE_string('runmode', 'infer', 'Run mode: {freeze, bm, dry}')
 flags.DEFINE_string('trace_filename', None, 'Trace file name.')
 
 flags.DEFINE_integer('threads', 0, 'Number of threads.')
@@ -43,14 +43,18 @@ flags.DEFINE_bool('freeze', False, 'Freeze graph.')
 flags.DEFINE_bool('use_xla', False, 'Run with xla optimization.')
 flags.DEFINE_integer('batch_size', 1, 'Batch size for inference.')
 
-flags.DEFINE_string('ckpt_path', None, 'checkpoint dir used for eval.')
+flags.DEFINE_string('ckpt_path',
+                    r"C:\Users\xuzeran\PycharmProjects\automl\data\model\efficientdet-d7x",
+                    'checkpoint dir used for eval.')
 flags.DEFINE_string('export_ckpt', None, 'Path for exporting new models.')
 
 flags.DEFINE_string(
     'hparams', '', 'Comma separated k=v pairs of hyperparameters or a module'
     ' containing attributes to use as hyperparameters.')
 
-flags.DEFINE_string('input_image', None, 'Input image path for inference.')
+flags.DEFINE_string('input_image',
+                    r"D:\xuzeran\lidar_cam_1028\image_252\1603887191.428720.png",
+                    'Input image path for inference.')
 flags.DEFINE_string('output_image_dir', None, 'Output dir for inference.')
 
 # For video.
