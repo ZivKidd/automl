@@ -14,6 +14,7 @@
 # ==============================================================================
 r"""Tool to inspect a model."""
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 import time
 from typing import Text, Tuple, List
 
@@ -44,7 +45,7 @@ flags.DEFINE_bool('use_xla', False, 'Run with xla optimization.')
 flags.DEFINE_integer('batch_size', 1, 'Batch size for inference.')
 
 flags.DEFINE_string('ckpt_path',
-                    r"C:\Users\xuzeran\PycharmProjects\automl\data\model\efficientdet-d7x",
+                    r'/media/sever/data1/xzr/efficientdet/data/efficientdet-d7x',
                     'checkpoint dir used for eval.')
 flags.DEFINE_string('export_ckpt', None, 'Path for exporting new models.')
 
@@ -53,9 +54,11 @@ flags.DEFINE_string(
     ' containing attributes to use as hyperparameters.')
 
 flags.DEFINE_string('input_image',
-                    r"D:\xuzeran\lidar_cam_1028\image_252\1603887191.428720.png",
+                    r"/media/sever/data1/xzr/efficientdet/data/image/1603700709.367395.png",
                     'Input image path for inference.')
-flags.DEFINE_string('output_image_dir', None, 'Output dir for inference.')
+flags.DEFINE_string('output_image_dir',
+                    r'/media/sever/data1/xzr/efficientdet/data/result',
+                    'Output dir for inference.')
 
 # For video.
 flags.DEFINE_string('input_video', None, 'Input video path for inference.')

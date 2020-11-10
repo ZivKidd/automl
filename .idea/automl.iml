@@ -5,7 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/efficientdet" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/data" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.7" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Remote Python 3.7.9 (sftp://sever@100.64.205.28:22/home/sever/anaconda3/envs/xzr-efficientdet/bin/python3.7)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">
