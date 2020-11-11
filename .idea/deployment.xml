@@ -9,6 +9,7 @@
           </mappings>
           <excludedPaths>
             <excludedPath path="/media/sever/data1/xzr/efficientdet/data" />
+            <excludedPath path="/media/sever/data1/xzr/efficientdet/model_result" />
           </excludedPaths>
         </serverdata>
       </paths>
