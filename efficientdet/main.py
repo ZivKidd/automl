@@ -16,7 +16,8 @@
 import multiprocessing
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
-from absl import app
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
+from absl import app1
 from absl import flags
 from absl import logging
 import numpy as np

@@ -15,7 +15,7 @@
 """The main training script."""
 import multiprocessing
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = ""
 from absl import app
 from absl import flags
 from absl import logging
