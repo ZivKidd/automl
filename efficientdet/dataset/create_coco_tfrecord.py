@@ -55,16 +55,18 @@ flags.DEFINE_string(
     'object_annotations_file is used if present. Otherwise, '
     'caption_annotations_file is used to get image info.')
 flags.DEFINE_string(
-    'object_annotations_file', '', 'File containing object '
-    'annotations - boxes and instance masks.')
+    'object_annotations_file',
+    '/media/sever/data1/xzr/efficientdet/data/coco/instances_val2017.json',
+    'File containing object annotations - boxes and instance masks.')
 flags.DEFINE_string('caption_annotations_file',
-                    '/media/sever/data1/xzr/efficientdet/data/coco/captions_val2017.json',
+                    # '/media/sever/data1/xzr/efficientdet/data/coco/captions_val2017.json',
+                    '',
                     'File containing image '
                     'captions.')
 flags.DEFINE_string('output_file_prefix',
-                    '/media/sever/data1/xzr/efficientdet/data/coco/tfrecord/val',
+                    '/media/sever/data1/xzr/efficientdet/data/coco/tfrecord/val1',
                     'Path to output file')
-flags.DEFINE_integer('num_shards', 32, 'Number of shards for output file.')
+flags.DEFINE_integer('num_shards', 1, 'Number of shards for output file.')
 flags.DEFINE_integer('num_threads', None, 'Number of threads to run.')
 FLAGS = flags.FLAGS
 
@@ -144,6 +146,7 @@ def create_tf_example(image,
     category_ids = []
     area = []
     encoded_mask_png = []
+    # 把标注的框写入tf_record
     for object_annotations in bbox_annotations:
       (x, y, width, height) = tuple(object_annotations['bbox'])
       if width <= 0 or height <= 0:
@@ -298,6 +301,7 @@ def _create_tf_record_from_coco_annotations(image_info_file,
   img_to_obj_annotation = None
   img_to_caption_annotation = None
   category_index = None
+  # 在这里把json读入
   if object_annotations_file:
     img_to_obj_annotation, category_index = (
         _load_object_annotations(object_annotations_file))
@@ -317,22 +321,31 @@ def _create_tf_record_from_coco_annotations(image_info_file,
     else:
       return None
 
-  pool = multiprocessing.Pool(FLAGS.num_threads)
+  # pool = multiprocessing.Pool(FLAGS.num_threads)
   total_num_annotations_skipped = 0
-  for idx, (_, tf_example, num_annotations_skipped) in enumerate(
-      pool.imap(
-          _pool_create_tf_example,
-          [(image, image_dir, _get_object_annotation(image['id']),
-            category_index, _get_caption_annotation(image['id']), include_masks)
-           for image in images])):
-    if idx % 100 == 0:
-      logging.info('On image %d of %d', idx, len(images))
 
-    total_num_annotations_skipped += num_annotations_skipped
-    writers[idx % num_shards].write(tf_example.SerializeToString())
+  for idx,image in enumerate(images):
+      # 把图像和标注转为tf_record
+      _, tf_example, num_annotations_skipped=create_tf_example(image, image_dir, _get_object_annotation(image['id']),
+                        category_index, _get_caption_annotation(image['id']), include_masks)
+      if idx % 100 == 0:
+          logging.info('On image %d of %d', idx, len(images))
 
-  pool.close()
-  pool.join()
+      total_num_annotations_skipped += num_annotations_skipped
+      writers[idx % num_shards].write(tf_example.SerializeToString())
+
+  # for idx, (_, tf_example, num_annotations_skipped) in enumerate(
+  #     # pool.imap(
+  #         create_tf_example(image, image_dir, _get_object_annotation(image['id']),
+  #           category_index, _get_caption_annotation(image['id']), include_masks)):
+  #   if idx % 100 == 0:
+  #     logging.info('On image %d of %d', idx, len(images))
+  #
+  #   total_num_annotations_skipped += num_annotations_skipped
+  #   writers[idx % num_shards].write(tf_example.SerializeToString())
+
+  # pool.close()
+  # pool.join()
 
   for writer in writers:
     writer.close()
